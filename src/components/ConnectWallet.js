@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ConnectWallet({ onConnect }) {
+function ConnectWallet({ onConnect, isPageLoaded }) {
   return (
     <div className="text-center py-12 fade-in">
       <div className="max-w-md mx-auto">
@@ -21,7 +21,13 @@ function ConnectWallet({ onConnect }) {
 
           <button
             onClick={onConnect}
-            className="w-full btn-primary text-lg py-3"
+            disabled={!isPageLoaded}
+            className={`w-full text-lg py-3 ${
+              isPageLoaded 
+                ? 'btn-primary' 
+                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+            }`}
+            style={{ cursor: isPageLoaded ? 'pointer' : 'not-allowed' }}
           >
             <div className="flex items-center justify-center space-x-2">
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">

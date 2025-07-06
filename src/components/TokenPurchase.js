@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ethers } from 'ethers';
 
 function TokenPurchase({
   purchaseAmount,
@@ -9,11 +10,14 @@ function TokenPurchase({
 }) {
   const [usdtAmount, setUsdtAmount] = useState('');
 
+  // 顯示價格
+  const displayTokenPrice = presaleInfo ? ethers.formatUnits(presaleInfo.tokenPrice, 6) : '0';
+  // USDT Amount 計算
   const handleTokenAmountChange = (value) => {
     setPurchaseAmount(value);
     if (presaleInfo && value) {
       const tokens = parseFloat(value);
-      const usdt = tokens * parseFloat(presaleInfo.tokenPrice);
+      const usdt = tokens * parseFloat(displayTokenPrice);
       setUsdtAmount(usdt.toFixed(2));
     } else {
       setUsdtAmount('');
@@ -134,7 +138,7 @@ function TokenPurchase({
           {presaleInfo && (
             <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
               <p className="text-sm text-blue-600">
-                Price: ${parseFloat(presaleInfo.tokenPrice).toFixed(2)} USDT per token
+                Price: ${parseFloat(displayTokenPrice).toFixed(2)} USDT per token
               </p>
             </div>
           )}

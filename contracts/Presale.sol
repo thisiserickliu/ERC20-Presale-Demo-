@@ -2,12 +2,11 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract Presale is ReentrancyGuard, Ownable {
-    using SafeMath for uint256;
+    // using SafeMath for uint256; // 移除
 
     IERC20 public token;
     IERC20 public paymentToken; // USDT, USDC, etc.
@@ -74,16 +73,16 @@ contract Presale is ReentrancyGuard, Ownable {
     function buyTokens(uint256 amount) external presaleActive whitelistCheck nonReentrant {
         require(amount >= minPurchase, "Amount below minimum purchase");
         require(amount <= maxPurchase, "Amount exceeds maximum purchase");
-        require(userPurchases[msg.sender].add(amount) <= maxPurchase, "Exceeds personal maximum");
-        require(tokensSold.add(amount) <= totalTokensForSale, "Not enough tokens available");
+        require(userPurchases[msg.sender] + amount <= maxPurchase, "Exceeds personal maximum");
+        require(tokensSold + amount <= totalTokensForSale, "Not enough tokens available");
         
-        uint256 cost = amount.mul(tokenPrice).div(10**18);
+        uint256 cost = amount * tokenPrice / 1e18;
         
         require(paymentToken.transferFrom(msg.sender, address(this), cost), "Payment transfer failed");
         
-        userPurchases[msg.sender] = userPurchases[msg.sender].add(amount);
-        tokensSold = tokensSold.add(amount);
-        totalRaised = totalRaised.add(cost);
+        userPurchases[msg.sender] = userPurchases[msg.sender] + amount;
+        tokensSold = tokensSold + amount;
+        totalRaised = totalRaised + cost;
         
         require(token.transfer(msg.sender, amount), "Token transfer failed");
         
@@ -97,7 +96,7 @@ contract Presale is ReentrancyGuard, Ownable {
         presaleFinalized = true;
         
         // Transfer unsold tokens back to owner
-        uint256 unsoldTokens = totalTokensForSale.sub(tokensSold);
+        uint256 unsoldTokens = totalTokensForSale - tokensSold;
         if (unsoldTokens > 0) {
             require(token.transfer(owner(), unsoldTokens), "Failed to transfer unsold tokens");
         }

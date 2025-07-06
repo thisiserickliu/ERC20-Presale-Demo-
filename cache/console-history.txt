@@ -1,0 +1,90 @@
+q
+npx hardhat run auto-query.js --network localhost
+q
+await usdt.connect(user).approve("0x09635F643e140090A9A8Dcd712eD6285858ceBef", ethers.parseUnits("1000", 6));
+const [user] = await ethers.getSigners();
+(await usdt.allowance("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", "0x09635F643e140090A9A8Dcd712eD6285858ceBef")).toString()
+const usdt = await ethers.getContractAt("MockUSDT", "0x5FbDB2315678afecb367f032d93F642f64180aa3");
+(await token.balanceOf("0x09635F643e140090A9A8Dcd712eD6285858ceBef")).toString()
+await token.connect(deployer).transfer("0x09635F643e140090A9A8Dcd712eD6285858ceBef", ethers.parseUnits("500000", 18));
+const [deployer] = await ethers.getSigners();
+(await token.balanceOf("0x09635F643e140090A9A8Dcd712eD6285858ceBef")).toString()
+const token = await ethers.getContractAt("MyToken", "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e");
+(await presale.userPurchases("0x70997970c51812dc3a010c7d01b50e0d17dc79c8")).toString()
+(await presale.tokensSold()).toString()
+(await presale.totalTokensForSale()).toString()
+(await presale.tokenPrice()).toString()
+const presale = await ethers.getContractAt("Presale", "0x09635F643e140090A9A8Dcd712eD6285858ceBef");
+(await presale.tokenPrice()).toString()
+(await usdt.allowance("0x70997970c51812dc3a010c7d01b50e0d17dc79c8", "0x09635F643e140090A9A8Dcd712eD6285858ceBef")).toString()
+const usdt = await ethers.getContractAt("MockUSDT", "0x5FbDB2315678afecb367f032d93F642f64180aa3");
+(await usdt.allowance("0x70997970c51812dc3a010c7d01b50e0d17dc79c8", "0x09635F643e140090A9A8Dcd712eD6285858ceBef")).toString()
+(await ethers.provider.getBlock('latest')).timestamp
+(await presale.presaleEnd()).toString()
+(await presale.presaleStart()).toString()
+(await presale.minPurchase()).toString()
+const presale = await ethers.getContractAt("Presale", "0x09635F643e140090A9A8Dcd712eD6285858ceBef");
+'2000000000'
+> (await usdt.balanceOf("0x70997970c51812dc3a010c7d01b50e0d17dc79c8")).toString()
+}
+  authorizationList: null
+  blobVersionedHashes: null,
+  accessList: [],
+  signature: Signature { r: "0xa6e6c822a9c05ccd10c44af7335163532c91651f02d2841528fa92f8ae41730e", s: "0x6c00498d7cc191394805f6352749717af730bbcdceedeecabd74cc4b72f72cb5", yParity: 1, networkV: null },
+  chainId: 1337n,
+  value: 0n,
+  data: '0xa9059cbb00000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c8000000000000000000000000000000000000000000000000000000003b9aca00',
+  maxFeePerBlobGas: null,
+  maxFeePerGas: 1012145264n,
+  maxPriorityFeePerGas: 1000000000n,
+  gasPrice: 1009596258n,
+  gasLimit: 30000000n,
+  nonce: 31,
+  from: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
+  to: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+  type: 2,
+  hash: '0xbfea6cb6ad5eaa04c7c95dac362104101fa1041cbcec15e6eecc40af19edc198',
+  index: undefined,
+  blockHash: '0x5caa6d3601a592b560b95b7c013a26e8b5df794067cf7e9c2d98e9c1dd667261',
+  blockNumber: 36,
+  },
+    _eventListeners: []
+    _transactionHashListeners: Map(0) {},
+    _blockListeners: [],
+    _networkName: 'localhost',
+    },
+      provider: [BackwardsCompatibilityProviderAdapter]
+      _initializingPromise: [Promise],
+      _emitter: [EventEmitter],
+      _providerFactory: [AsyncFunction (anonymous)],
+    _hardhatProvider: LazyInitializationProviderAdapter {
+  provider: HardhatEthersProvider {
+ContractTransactionResponse {
+> await usdt.connect(deployer).transfer("0x70997970c51812dc3a010c7d01b50e0d17dc79c8", ethers.parseUnits("1000", 6));
+undefined
+> const usdt = await ethers.getContractAt("MockUSDT", "0x5FbDB2315678afecb367f032d93F642f64180aa3");
+await usdt.connect(deployer).transfer("0x70997970c51812dc3a010c7d01b50e0d17dc79c8", ethers.parseUnits("1000", 6));undefined
+x5FbDB2315678afecb367f032d93F642f64180aa3");
+> const [deployer] = await ethers.getSigners();
+Type ".help" for more information.
+Welcome to Node.js v20.17.0.
+(await usdt.balanceOf("0x70997970c51812dc3a010c7d01b50e0d17dc79c8")).toString()
+await usdt.connect(deployer).transfer("0x70997970c51812dc3a010c7d01b50e0d17dc79c8", ethers.parseUnits("1000", 6));
+const usdt = await ethers.getContractAt("MockUSDT", "0x5FbDB2315678afecb367f032d93F642f64180aa3");
+const [deployer] = await ethers.getSigners();
+npm start
+(await usdt.balanceOf("0x70997970c51812dc3a010c7d01b50e0d17dc79c8")).toString()
+await usdt.connect(deployer).transfer("0x70997970c51812dc3a010c7d01b50e0d17dc79c8", ethers.parseUnits("1000", 6));
+// 轉 1000 USDT 給你的帳號（6 decimals）
+const usdt = await ethers.getContractAt("MockUSDT", "0x5FbDB2315678afecb367f032d93F642f64180aa3");
+const [deployer] = await ethers.getSigners();
+/ 取得 deployer（通常是 accounts[0]）
+(await presale.presaleEnd()).toString()
+(await presale.presaleStart()).toString()
+(await usdt.balanceOf("0x70997970c51812dc3a010c7d01b50e0d17dc79c8")).toString()
+const usdt = await ethers.getContractAt("MockUSDT", "0x5FbDB2315678afecb367f032d93F642f64180aa3");
+(await usdt.balanceOf("0x70997970c51812dc3a010c7d01b50e0d17dc79c8")).toString()
+const usdt = await ethers.getContractAt("MockUSDT", "0x5FbDB2315678afecb367f032d93F642f64180aa3");
+q
+npx hardhat run scripts/test-contracts.js --network localhost
+q

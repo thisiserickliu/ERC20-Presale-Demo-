@@ -1,4 +1,5 @@
 import React from 'react';
+import { ethers } from 'ethers';
 
 function PresaleInfo({ presaleInfo }) {
   if (!presaleInfo) {
@@ -31,7 +32,7 @@ function PresaleInfo({ presaleInfo }) {
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Token Price:</span>
-              <span className="font-medium">${parseFloat(presaleInfo.tokenPrice).toFixed(2)} USDT</span>
+              <span className="font-medium">${parseFloat(ethers.formatUnits(presaleInfo.tokenPrice, 6)).toFixed(2)} USDT</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Total Supply:</span>

@@ -6,11 +6,7 @@ import TokenPurchase from './components/TokenPurchase';
 import PresaleInfo from './components/PresaleInfo';
 import ConnectWallet from './components/ConnectWallet';
 import './App.css';
-
-// Contract addresses (replace with your deployed addresses)
-const PRESALE_ADDRESS = '0x...'; // Your presale contract address
-const TOKEN_ADDRESS = '0x...'; // Your token contract address
-const USDT_ADDRESS = '0x...'; // Your USDT contract address
+import { PRESALE_ADDRESS, TOKEN_ADDRESS, USDT_ADDRESS } from './constants';
 
 // Contract ABIs
 const PRESALE_ABI = [
@@ -41,6 +37,12 @@ const PRESALE_ABI = [
   }
 ];
 
+// USDT ABI (只需 approve 與 allowance)
+const USDT_ABI = [
+  "function approve(address spender, uint256 amount) public returns (bool)",
+  "function allowance(address owner, address spender) public view returns (uint256)"
+];
+
 function App() {
   const [account, setAccount] = useState(null);
   const [provider, setProvider] = useState(null);
@@ -49,20 +51,35 @@ function App() {
   const [purchaseAmount, setPurchaseAmount] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isPageLoaded, setIsPageLoaded] = useState(false);
 
   // Connect wallet
   const connectWallet = async () => {
+    console.log('Connect wallet button clicked');
     try {
       if (window.ethereum) {
+        console.log('MetaMask detected, requesting accounts...');
+        
+        // Check network first
+        const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+        console.log('Current chainId:', chainId);
+        
+        if (chainId !== '0x7a69' && chainId !== '0x539') { // 31337 or 1337 in hex
+          setError('Please switch to Hardhat network (Chain ID: 31337 or 1337)');
+          return;
+        }
+        
         const accounts = await window.ethereum.request({
           method: 'eth_requestAccounts'
         });
         const account = accounts[0];
+        console.log('Connected account:', account);
         setAccount(account);
         
         const provider = new ethers.BrowserProvider(window.ethereum);
         setProvider(provider);
         
+        console.log('Creating presale contract instance...');
         const presaleContract = new ethers.Contract(
           PRESALE_ADDRESS,
           PRESALE_ABI,
@@ -73,33 +90,38 @@ function App() {
         // Load presale info
         await loadPresaleInfo(presaleContract);
       } else {
+        console.log('MetaMask not detected');
         setError('Please install MetaMask!');
       }
     } catch (error) {
       console.error('Error connecting wallet:', error);
-      setError('Failed to connect wallet');
+      setError(`Failed to connect wallet: ${error.message}`);
     }
   };
 
   // Load presale information
   const loadPresaleInfo = async (contract) => {
     try {
+      console.log('Loading presale info from contract:', contract.target);
       const info = await contract.getPresaleInfo();
+      console.log('Raw presale info:', info);
+      
       setPresaleInfo({
-        tokenPrice: ethers.formatEther(info[0]),
-        minPurchase: ethers.formatEther(info[1]),
-        maxPurchase: ethers.formatEther(info[2]),
-        totalTokensForSale: ethers.formatEther(info[3]),
-        tokensSold: ethers.formatEther(info[4]),
-        totalRaised: ethers.formatEther(info[5]),
+        tokenPrice: info[0], // 保留原始 BigInt，不 formatUnits
+        minPurchase: ethers.formatUnits(info[1], 18),
+        maxPurchase: ethers.formatUnits(info[2], 18),
+        totalTokensForSale: ethers.formatUnits(info[3], 18),
+        tokensSold: ethers.formatUnits(info[4], 18),
+        totalRaised: ethers.formatUnits(info[5], 6), // USDT 6 decimals
         presaleStart: Number(info[6]),
         presaleEnd: Number(info[7]),
         presaleFinalized: info[8],
         whitelistEnabled: info[9],
       });
+      console.log('Presale info loaded successfully');
     } catch (error) {
       console.error('Error loading presale info:', error);
-      setError('Failed to load presale information');
+      setError(`Failed to load presale information: ${error.message}`);
     }
   };
 
@@ -113,16 +135,30 @@ function App() {
 
       const signer = await provider.getSigner();
       const contractWithSigner = presaleContract.connect(signer);
-      
-      const amount = ethers.parseEther(purchaseAmount);
+      const usdt = new ethers.Contract(USDT_ADDRESS, USDT_ABI, signer);
+      const amount = ethers.parseUnits(purchaseAmount, 18); // bigint
+      const tokenPrice = presaleInfo.tokenPrice; // 直接用 BigInt
+      const usdtCost = amount * tokenPrice / ethers.parseUnits("1", 18); // bigint
+      // 1. 先檢查 allowance
+      let allowance = await usdt.allowance(account, PRESALE_ADDRESS);
+      if (allowance < usdtCost) {
+        // 2. 若不足，先 approve 足夠數量（這裡直接 approve usdtCost）
+        const approveTx = await usdt.approve(PRESALE_ADDRESS, usdtCost);
+        await approveTx.wait();
+        // 再查一次 allowance 確保已經足夠
+        allowance = await usdt.allowance(account, PRESALE_ADDRESS);
+        if (allowance < usdtCost) {
+          setError('Approve USDT 失敗，請重試');
+          setIsLoading(false);
+          return;
+        }
+      }
+      // 3. 再購買
       const tx = await contractWithSigner.buyTokens(amount);
-      
       await tx.wait();
-      
       // Reload presale info
       await loadPresaleInfo(presaleContract);
       setPurchaseAmount('');
-      
       alert('Purchase successful!');
     } catch (error) {
       console.error('Error purchasing tokens:', error);
@@ -146,6 +182,10 @@ function App() {
         }
       });
     }
+    
+    // Set page as loaded
+    setIsPageLoaded(true);
+    console.log('Page loaded, MetaMask available:', !!window.ethereum);
   }, []);
 
   return (
@@ -154,7 +194,7 @@ function App() {
       
       <main className="container mx-auto px-4 py-8">
         {!account ? (
-          <ConnectWallet onConnect={connectWallet} />
+          <ConnectWallet onConnect={connectWallet} isPageLoaded={isPageLoaded} />
         ) : (
           <>
             {error && (
