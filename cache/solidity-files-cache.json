@@ -268,8 +268,8 @@
       ]
     },
     "/Users/thisiserickliu/Desktop/BlockChain/ERC20-Presale-Demo-/contracts/Presale.sol": {
-      "lastModificationDate": 1751731939117,
-      "contentHash": "f9808ea4a82b869ed7f26c33d831969c",
+      "lastModificationDate": 1751788730345,
+      "contentHash": "0a424565e06015c175a4bb0f23481c89",
       "sourceName": "contracts/Presale.sol",
       "solcConfig": {
         "version": "0.8.20",

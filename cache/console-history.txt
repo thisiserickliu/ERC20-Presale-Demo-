@@ -1,3 +1,56 @@
+await usdt.approve("0xa513E6E4b8f2a923D98304ec87F64353C4D5C853", "100000000"); // 例如 approve 100 USDT（100 * 10^6）
+const usdt = await hre.ethers.getContractAt("MockUSDT", "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707");
+await usdt.approve("0xa513E6E4b8f2a923D98304ec87F64353C4D5C853", "100000000"); // 例如 approve 100 USDT（100 * 10^6）
+const usdt = await hre.ethers.getContractAt("MockUSDT", "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707");
+await usdt.approve("0xa513E6E4b8f2a923D98304ec87F64353C4D5C853", "100000000"); // 例如 approve 100 USDT（100 * 10^6）
+const usdt = await hre.ethers.getContractAt("MockUSDT", "USDT合約地址");
+await myToken.balanceOf("0xa513E6E4b8f2a923D98304ec87F64353C4D5C853");
+await myToken.transfer("0xa513E6E4b8f2a923D98304ec87F64353C4D5C853", "100000000000000000000000");
+const [owner2] = await hre.ethers.getSigners();
+const [] = await hre.ethers.getSigners();
+const [owner] = await hre.ethers.getSigners();
+await myToken.balanceOf("0xa513E6E4b8f2a923D98304ec87F64353C4D5C853");
+const myToken = await hre.ethers.getContractAt("MyToken", "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512");
+await myToken.balanceOf("0xa513E6E4b8f2a923D98304ec87F64353C4D5C853");
+   await presale.startPresale(now + 60, now + 3600);
+   const now = Math.floor(Date.now() / 1000);
+   const presale = await hre.ethers.getContractAt("Presale", "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853");
+const [owner] = await hre.ethers.getSigners();
+.clear
+clear
+   await presale.startPresale(now + 60, now + 3600);
+   const now = Math.floor(Date.now() / 1000);
+   // 例如：現在時間+60秒開始，+1小時結束
+   const presale = await ethers.getContractAt("Presale", "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853");
+const [owner] = await ethers.getSigners();
+   await presale.startPresale(now + 60, now + 3600);
+   const now = Math.floor(Date.now() / 1000);
+   // 例如：現在時間+60秒開始，+1小時結束
+   const presale = await ethers.getContractAt("Presale", "新合約地址");
+ const [owner] = await ethers.getSigners();
+presale.interface.fragments.map(f => f.name)
+presale.interface.fragments.map(f => f.name) // 應該有 startPresale
+presale.target // 應該顯示合約地址
+const presale = await ethers.getContractAt("Presale", "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0");
+const [owner] = await ethers.getSigners();
+await presale.startPresale();
+// 啟動預售
+const presale = await ethers.getContractAt("Presale", "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853");
+// 取得 Presale 合約實例
+const [owner] = await ethers.getSigners();
+// 取得帳號
+await presale.startPresale();
+// 啟動預售
+const presale = await ethers.getContractAt("Presale", "0xYourPresaleAddress");
+// 取得 Presale 合約實例
+const [owner] = await ethers.getSigners();
+// 取得帳號
+await presale.startPresale();
+// 啟動預售
+const presale = await ethers.getContractAt("Presale", "0xYourPresaleAddress");
+// 取得 Presale 合約實例
+const [owner] = await ethers.getSigners();
+// 取得帳號
 q
 npx hardhat run auto-query.js --network localhost
 q

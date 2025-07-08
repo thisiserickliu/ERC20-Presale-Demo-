@@ -128,6 +128,14 @@ contract Presale is ReentrancyGuard, Ownable {
         presaleStart = _start;
         presaleEnd = _end;
     }
+
+    function startPresale(uint256 _start, uint256 _end) external onlyOwner {
+        require(_end > _start, "Invalid presale period");
+        require(block.timestamp < _start, "Start time must be in the future");
+        require(!presaleFinalized, "Presale already finalized");
+        presaleStart = _start;
+        presaleEnd = _end;
+    }
     
     function updateTokenPrice(uint256 _price) external onlyOwner {
         require(_price > 0, "Token price must be greater than 0");
