@@ -125,7 +125,7 @@ function App() {
         console.log('Connected account:', account);
         setAccount(account);
         
-        const provider = new ethers.BrowserProvider(window.ethereum);
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
         setProvider(provider);
         
         console.log('Creating presale contract instance...');
@@ -157,11 +157,11 @@ function App() {
       
       setPresaleInfo({
         tokenPrice: info[0], // 保留原始 BigInt，不 formatUnits
-        minPurchase: ethers.formatUnits(info[1], 18),
-        maxPurchase: ethers.formatUnits(info[2], 18),
-        totalTokensForSale: ethers.formatUnits(info[3], 18),
-        tokensSold: ethers.formatUnits(info[4], 18),
-        totalRaised: ethers.formatUnits(info[5], 6), // USDT 6 decimals
+        minPurchase: ethers.utils.formatUnits(info[1], 18),
+        maxPurchase: ethers.utils.formatUnits(info[2], 18),
+        totalTokensForSale: ethers.utils.formatUnits(info[3], 18),
+        tokensSold: ethers.utils.formatUnits(info[4], 18),
+        totalRaised: ethers.utils.formatUnits(info[5], 6), // USDT 6 decimals
         presaleStart: Number(info[6]),
         presaleEnd: Number(info[7]),
         presaleFinalized: info[8],
@@ -186,9 +186,9 @@ function App() {
       const signer = await provider.getSigner();
       const contractWithSigner = presaleContract.connect(signer);
       const usdt = new ethers.Contract(USDT_ADDRESS, USDT_ABI, signer);
-      const amount = ethers.parseUnits(purchaseAmount, 18); // bigint
+      const amount = ethers.utils.parseUnits(purchaseAmount, 18); // bigint
       const tokenPrice = presaleInfo.tokenPrice; // 直接用 BigInt
-      const usdtCost = amount * tokenPrice / ethers.parseUnits("1", 18); // bigint
+      const usdtCost = amount * tokenPrice / ethers.utils.parseUnits("1", 18); // bigint
       
       console.log('Purchase details:', {
         amount: amount.toString(),

@@ -92,7 +92,7 @@ function PresaleStats({ presaleInfo }) {
         <div>
           <h3 className="text-lg font-semibold text-gray-900 mb-2">Token Price</h3>
           <p className="text-3xl font-bold text-gray-900">
-            ${parseFloat(ethers.formatUnits(presaleInfo.tokenPrice, 6)).toFixed(2)}
+            ${parseFloat(ethers.utils.formatUnits(presaleInfo.tokenPrice, 6)).toFixed(2)}
           </p>
           <p className="text-sm text-gray-500">per token</p>
         </div>

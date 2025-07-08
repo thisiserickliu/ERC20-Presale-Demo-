@@ -21,8 +21,8 @@ export default function TransactionHistory({ account, provider, presaleAddress, 
       const filter = {
         address: presaleAddress,
         topics: [
-          ethers.id("TokensPurchased(address,uint256,uint256)"),
-          ethers.zeroPadValue(account, 32) // 過濾特定用戶
+          ethers.utils.id("TokensPurchased(address,uint256,uint256)"),
+          ethers.utils.hexZeroPad(account, 32) // v5: hexZeroPad
         ]
       };
       
@@ -36,15 +36,15 @@ export default function TransactionHistory({ account, provider, presaleAddress, 
         events.map(async (event) => {
           const block = await provider.getBlock(event.blockNumber);
           // 解析事件參數
-          const decoded = ethers.AbiCoder.defaultAbiCoder().decode(
+          const decoded = ethers.utils.defaultAbiCoder.decode(
             ['address', 'uint256', 'uint256'],
-            ethers.dataSlice(event.data, 0)
+            ethers.utils.hexDataSlice(event.data, 0)
           );
           
           return {
             hash: event.transactionHash,
-            amount: ethers.formatUnits(decoded[1], 18),
-            cost: ethers.formatUnits(decoded[2], 6), // USDT 6 decimals
+            amount: ethers.utils.formatUnits(decoded[1], 18),
+            cost: ethers.utils.formatUnits(decoded[2], 6), // USDT 6 decimals
             timestamp: block.timestamp,
             blockNumber: event.blockNumber
           };

@@ -48,11 +48,11 @@ export default function UserDashboard({ account, provider, presaleAddress, presa
       });
       
       setUserInfo({
-        purchased: ethers.formatUnits(userData[0], 18),
+        purchased: ethers.utils.formatUnits(userData[0], 18),
         whitelisted: userData[1],
-        tokenBalance: ethers.formatUnits(tokenBalance, tokenDecimals),
-        usdtBalance: ethers.formatUnits(usdtBalance, usdtDecimals),
-        usdtAllowance: ethers.formatUnits(usdtAllowance, usdtDecimals)
+        tokenBalance: ethers.utils.formatUnits(tokenBalance, tokenDecimals),
+        usdtBalance: ethers.utils.formatUnits(usdtBalance, usdtDecimals),
+        usdtAllowance: ethers.utils.formatUnits(usdtAllowance, usdtDecimals)
       });
     } catch (error) {
       console.error('Error loading user info:', error);

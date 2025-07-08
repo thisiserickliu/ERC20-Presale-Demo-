@@ -113,7 +113,7 @@ export default function WhitelistManager({ account, provider, presaleAddress, pr
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(presaleAddress, presaleABI, signer);
       
-      const validAddresses = addresses.filter(addr => ethers.isAddress(addr));
+      const validAddresses = addresses.filter(addr => ethers.utils.isAddress(addr));
       const statuses = new Array(validAddresses.length).fill(true);
       
       const tx = await contract.setWhitelist(validAddresses, statuses);
@@ -199,7 +199,7 @@ export default function WhitelistManager({ account, provider, presaleAddress, pr
     
     for (const line of lines) {
       const address = line.trim().split(',')[0]; // 假設地址在第一列
-      if (ethers.isAddress(address)) {
+      if (ethers.utils.isAddress(address)) {
         addresses.push(address);
       }
     }

@@ -46,8 +46,8 @@ const TokenPurchase = ({
       const usdtBalanceRaw = await usdtContract.balanceOf(account);
       const usdtAllowanceRaw = await usdtContract.allowance(account, presaleAddress);
       const usdtDecimals = await usdtContract.decimals();
-      setUsdtBalance(ethers.formatUnits(usdtBalanceRaw, usdtDecimals));
-      setAllowance(ethers.formatUnits(usdtAllowanceRaw, usdtDecimals));
+      setUsdtBalance(ethers.utils.formatUnits(usdtBalanceRaw, usdtDecimals));
+      setAllowance(ethers.utils.formatUnits(usdtAllowanceRaw, usdtDecimals));
     } catch (err) {
       console.error('Error fetching balances:', err);
     }
@@ -177,7 +177,7 @@ const TokenPurchase = ({
             />
             {purchaseAmount && presaleInfo && (
               <p className="mt-1 text-sm text-gray-500">
-                Cost: ${(parseFloat(purchaseAmount || '0') * parseFloat(ethers.formatUnits(presaleInfo.tokenPrice, 6))).toFixed(2)} USDT
+                Cost: ${(parseFloat(purchaseAmount || '0') * parseFloat(ethers.utils.formatUnits(presaleInfo.tokenPrice, 6))).toFixed(2)} USDT
               </p>
             )}
           </div>
