@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Presale is ReentrancyGuard, Ownable {
@@ -39,7 +39,7 @@ contract Presale is ReentrancyGuard, Ownable {
         uint256 _totalTokensForSale,
         uint256 _presaleStart,
         uint256 _presaleEnd
-    ) Ownable(msg.sender) {
+    ) {
         require(_token != address(0), "Invalid token address");
         require(_paymentToken != address(0), "Invalid payment token address");
         require(_tokenPrice > 0, "Token price must be greater than 0");

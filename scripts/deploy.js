@@ -5,21 +5,21 @@ async function main() {
   console.log("Deploying contracts with the account:", deployer.address);
 
   // Deploy Mock USDT first
-  const MockUSDT = await hre.ethers.getContractFactory("MockUSDT");
+  const MockUSDT = await ethers.getContractFactory("MockUSDT");
   const mockUSDT = await MockUSDT.deploy();
   await mockUSDT.waitForDeployment();
   console.log("MockUSDT deployed to:", await mockUSDT.getAddress());
 
   // Deploy MyToken
   const MyToken = await hre.ethers.getContractFactory("MyToken");
-  const myToken = await MyToken.deploy("MyToken", "MTK", 1000000); // 1M tokens
+  const myToken = await MyToken.deploy(); // 不傳參數
   await myToken.waitForDeployment();
   console.log("MyToken deployed to:", await myToken.getAddress());
 
   // Deploy Presale
   const currentTime = Math.floor(Date.now() / 1000);
   const presaleStart = currentTime + 60; // Start in 1 minute
-  const presaleEnd = currentTime + 86400 * 30; // End in 30 days
+  const presaleEnd = currentTime + 9999 * 24 * 60 * 60; // End in 9999 days
 
   const Presale = await hre.ethers.getContractFactory("Presale");
   const presale = await Presale.deploy(
@@ -40,10 +40,7 @@ async function main() {
   await myToken.transfer(await presale.getAddress(), tokensForSale);
   console.log("Transferred 500,000 tokens to presale contract");
 
-  // Mint some USDT to deployer for testing
-  const usdtAmount = ethers.parseUnits("10000", 6); // 10K USDT
-  await mockUSDT.mint(deployer.address, usdtAmount);
-  console.log("Minted 10,000 USDT to deployer");
+  // 不呼叫 mockUSDT.mint，因為合約沒有 mint function
 
   console.log("\nDeployment Summary:");
   console.log("===================");
