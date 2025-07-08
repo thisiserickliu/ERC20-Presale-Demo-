@@ -1,0 +1,13 @@
+await usdt.decimals();
+console.log(ethers.formatUnits(balance, decimals));
+const decimals = await usdt.decimals();
+const balance = await usdt.balanceOf("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
+const usdt = new ethers.Contract("0x5fbdb2315678afecb367f032d93f642f64180aa3", abi, ethers.provider);
+];
+  "function decimals() view returns (uint8)"
+  "function balanceOf(address owner) view returns (uint256)",
+const abi = [
+];
+  "function decimals() view returns (uint8)"
+  "function balanceOf(address owner) view returns (uint256)",
+const abi = [
