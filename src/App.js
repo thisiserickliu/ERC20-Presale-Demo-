@@ -113,8 +113,9 @@ function App() {
         const chainId = await window.ethereum.request({ method: 'eth_chainId' });
         console.log('Current chainId:', chainId);
         
-        if (chainId !== '0x7a69' && chainId !== '0x539') { // 31337 or 1337 in hex
-          setError('Please switch to Hardhat network (Chain ID: 31337 or 1337)');
+        // 僅允許 Sepolia
+        if (chainId !== '0xaa36a7') { // 0xaa36a7 = 11155111 (Sepolia)
+          setError('Please switch to Sepolia network (Chain ID: 11155111)');
           return;
         }
         
