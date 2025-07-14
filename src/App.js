@@ -286,6 +286,12 @@ function App() {
           </div>
         ) : (
           <div className="container mx-auto px-4 py-8">
+            {account && (
+              <div className="mb-4 flex items-center space-x-2">
+                <span className="text-cyan-300 font-mono text-lg">Wallet: {account}</span>
+                <span className="bg-green-500 w-2 h-2 rounded-full inline-block"></span>
+              </div>
+            )}
             {error && (
               <div className="mb-6 p-4 bg-gradient-to-r from-red-500/80 to-pink-500/80 border border-red-400 rounded-lg shadow-lg">
                 <p className="text-white font-semibold">{error}</p>
