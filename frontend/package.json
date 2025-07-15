@@ -31,7 +31,7 @@
     "npm-force-resolutions": "^0.0.10"
   },
   "resolutions": {
-    "typescript": "5.2.0",
+    "typescript": "5.4.5",
     "@wagmi/chains": "1.3.0",
     "abitype": "0.9.0"
   },
