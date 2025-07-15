@@ -120,8 +120,8 @@ function App() {
         });
         console.log('accounts:', accounts);
 
-        if (chainId !== '0x7a69' && chainId !== '0x539') { // 31337 or 1337 in hex
-          setError('Please switch to Hardhat network (Chain ID: 31337 or 1337)');
+        if (chainId !== '0xaa36a7' && chainId !== '0x7a69' && chainId !== '0x539') {
+          setError('Please switch to Sepolia or Hardhat network');
           return;
         }
         
