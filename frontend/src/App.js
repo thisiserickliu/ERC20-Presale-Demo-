@@ -113,17 +113,24 @@ function App() {
         const chainId = await window.ethereum.request({ method: 'eth_chainId' });
         console.log('Current chainId:', chainId);
         
+        // 直接呼叫 requestAccounts 前加 log
+        console.log('即將呼叫 eth_requestAccounts');
+        const accounts = await window.ethereum.request({
+          method: 'eth_requestAccounts'
+        });
+        console.log('accounts:', accounts);
+
         if (chainId !== '0x7a69' && chainId !== '0x539') { // 31337 or 1337 in hex
           setError('Please switch to Hardhat network (Chain ID: 31337 or 1337)');
           return;
         }
         
-        const accounts = await window.ethereum.request({
-          method: 'eth_requestAccounts'
-        });
-        const account = accounts[0];
-        console.log('Connected account:', account);
-        setAccount(account);
+        // const accounts = await window.ethereum.request({
+        //   method: 'eth_requestAccounts'
+        // });
+        // const account = accounts[0];
+        // console.log('Connected account:', account);
+        // setAccount(account);
         
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         setProvider(provider);
