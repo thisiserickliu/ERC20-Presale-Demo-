@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
+import { PRESALE_ADDRESS, PRESALE_ABI } from '../constants';
 
-export default function UserDashboard({ account, provider, presaleAddress, presaleABI, tokenAddress, usdtAddress }) {
+export default function UserDashboard({ account, provider, presaleAddress = PRESALE_ADDRESS, presaleABI = PRESALE_ABI, tokenAddress, usdtAddress, onWhitelistStatusChange }) {
   const [userInfo, setUserInfo] = useState({
     purchased: '0',
     whitelisted: false,
@@ -10,6 +11,7 @@ export default function UserDashboard({ account, provider, presaleAddress, presa
     usdtAllowance: '0'
   });
   const [loading, setLoading] = useState(false);
+  const [applying, setApplying] = useState(false);
 
   // 載入用戶資訊
   const loadUserInfo = async () => {
@@ -61,12 +63,35 @@ export default function UserDashboard({ account, provider, presaleAddress, presa
     }
   };
 
+  // 申請加入白名單
+  const handleApplyWhitelist = async () => {
+    if (!account || !provider) return;
+    setApplying(true);
+    try {
+      const signer = provider.getSigner();
+      const presale = new ethers.Contract(presaleAddress, presaleABI, signer);
+      const tx = await presale.applyWhitelist();
+      await tx.wait();
+      alert('申請成功，請稍後刷新狀態！');
+      loadUserInfo();
+    } catch (err) {
+      alert('申請失敗：' + (err.reason || err.message));
+    }
+    setApplying(false);
+  };
+
   useEffect(() => {
     loadUserInfo();
     // 每 30 秒更新一次
     const interval = setInterval(loadUserInfo, 30000);
     return () => clearInterval(interval);
   }, [account, provider]);
+
+  useEffect(() => {
+    if (onWhitelistStatusChange) {
+      onWhitelistStatusChange(userInfo.whitelisted);
+    }
+  }, [userInfo.whitelisted]);
 
   if (!account) {
     return (
@@ -143,6 +168,16 @@ export default function UserDashboard({ account, provider, presaleAddress, presa
                 {userInfo.whitelisted ? '✅ Whitelisted' : '❌ Not Whitelisted'}
               </span>
             </div>
+            {/* 自助申請白名單按鈕 */}
+            {!userInfo.whitelisted && (
+              <button
+                className="mt-3 btn-primary px-4 py-1 rounded disabled:opacity-50"
+                onClick={handleApplyWhitelist}
+                disabled={applying}
+              >
+                {applying ? '申請中...' : '申請加入白名單'}
+              </button>
+            )}
           </div>
 
           {/* Quick Actions */}

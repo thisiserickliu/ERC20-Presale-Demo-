@@ -1,3 +1,16 @@
+await myToken.transfer("0x1Db2453EB2Ef64c0dDB7937d500d7D50eEd974E5", amount);
+const amount = ethers.parseUnits("500000", 18);
+const myToken = await ethers.getContractAt("MyToken", "0xA0d72d5542b2DaF5B1E1F90351Df2BFE1D8B6e66");
+   await myToken.transfer("0x1Db2453EB2Ef64c0dDB7937d500d7D50eEd974E5", ethers.utils.parseUnits("500000", 18));
+   const myToken = await ethers.getContractAt("MyToken", "0xA0d72d5542b2DaF5B1E1F90351Df2BFE1D8B6e66");
+await presale.setWhitelistEnabled(true)
+ const presale = await ethers.getContractAt("Presale", "0xA3966ece8cb2a65Ad0d4934071fc8B670949b943")
+  const presale = await ethers.getContractAt("Presale", "0xA3966ece8cb2a65Ad0d4934071fc8B670949b943")
+await presale.setWhitelistEnabled(true)
+Uncaught SyntaxError: Identifier 'presale' has already been declared
+await presale.setWhitelistEnabled(true)> const presale = await ethers.getContractAt("Presale", "0xA3966ece8cb2a65Ad0d4934071fc8B670949b943") 
+const presale = await ethers.getContractAt("Presale", "0xA3966ece8cb2a65Ad0d4934071fc8B670949b943")
+const presale = await ethers.getContractAt("Presale", "你的Presale合約地址")
 await usdt.decimals();
 console.log(ethers.formatUnits(balance, decimals));
 const decimals = await usdt.decimals();

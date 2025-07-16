@@ -12,7 +12,8 @@ const TokenPurchase = ({
   isLoading, 
   error, 
   purchaseAmount, // 新增
-  setPurchaseAmount // 新增
+  setPurchaseAmount, // 新增
+  isWhitelisted // 新增
 }) => {
   const [userInfo, setUserInfo] = useState(null);
   const [allowance, setAllowance] = useState('0');
@@ -161,7 +162,12 @@ const TokenPurchase = ({
             </p>
           </div>
         )}
-
+        {/* 新增：未在白名單時顯示提示 */}
+        {canPurchase && !isWhitelisted && (
+          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-red-800">您尚未在白名單，請先申請加入白名單才能購買。</p>
+          </div>
+        )}
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -173,7 +179,7 @@ const TokenPurchase = ({
               onChange={(e) => setPurchaseAmount(e.target.value)}
               placeholder="Enter amount"
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
-              disabled={!canPurchase || isLoading}
+              disabled={!canPurchase || isLoading || !isWhitelisted}
             />
             {purchaseAmount && presaleInfo && (
               <p className="mt-1 text-sm text-gray-500">
@@ -185,7 +191,7 @@ const TokenPurchase = ({
           <button
             type="button"
             onClick={() => { console.log('purchase click!'); handlePurchase(); }}
-            disabled={!canPurchase || isLoading || !purchaseAmount}
+            disabled={!canPurchase || isLoading || !purchaseAmount || !isWhitelisted}
             className="w-full bg-primary-600 text-white py-2 px-4 rounded-md hover:bg-primary-700 disabled:opacity-50"
           >
             {isLoading ? 'Processing...' : 'Purchase Tokens'}

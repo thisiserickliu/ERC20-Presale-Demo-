@@ -136,6 +136,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [isPageLoaded, setIsPageLoaded] = useState(false);
+  const [isWhitelisted, setIsWhitelisted] = useState(false); // 新增
   const faqRef = useRef(null);
   const roadmapRef = useRef(null);
 
@@ -458,6 +459,7 @@ function App() {
                           onPurchase={purchaseTokens}
                           isLoading={isLoading}
                           presaleInfo={presaleInfo}
+                          isWhitelisted={isWhitelisted}
                         />
                       </div>
                     </div>
@@ -472,6 +474,7 @@ function App() {
                         presaleABI={PRESALE_ABI}
                         tokenAddress={MYTOKEN_ADDRESS}
                         usdtAddress={USDT_ADDRESS}
+                        onWhitelistStatusChange={setIsWhitelisted}
                       />
                     </div>
                     <div className="card bg-gradient-to-br from-[#232526] to-[#414345] border border-cyan-400/30 rounded-2xl shadow-xl p-6">
