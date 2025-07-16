@@ -485,7 +485,7 @@ function App() {
                   </div>
                 </div>
               )}
-            } />
+            />
             <Route path="/roadmap" element={<Roadmap />} />
           </Routes>
         </main>
