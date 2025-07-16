@@ -72,12 +72,12 @@ const TokenPurchase = ({
   };
 
   useEffect(() => {
-    if (account) {
+    if (account && provider && usdtAddress && presaleAddress) {
       fetchUserInfo();
       fetchBalances();
       fetchTransactions();
     }
-  }, [account]);
+  }, [account, provider, usdtAddress, presaleAddress]);
 
   const handlePurchase = () => {
     console.log('handlePurchase called');
