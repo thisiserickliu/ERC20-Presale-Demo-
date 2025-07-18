@@ -134,15 +134,15 @@ const TokenPurchase = ({
       <div className="card">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Your Balances</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
+          <div className="overflow-x-auto">
             <p className="text-sm text-gray-500">USDT Balance</p>
-            <p className="text-xl font-bold text-green-600">
+            <p className="text-xl font-bold text-green-600 break-all max-w-[180px]">
               {parseFloat(usdtBalance).toLocaleString()} USDT
             </p>
           </div>
-          <div>
+          <div className="overflow-x-auto">
             <p className="text-sm text-gray-500">USDT Allowance</p>
-            <p className="text-xl font-bold text-blue-600">
+            <p className="text-xl font-bold text-blue-600 break-all max-w-[180px]">
               {parseFloat(allowance).toLocaleString()} USDT
             </p>
           </div>
@@ -163,11 +163,20 @@ const TokenPurchase = ({
           </div>
         )}
         {/* 新增：未在白名單時顯示提示 */}
-        {canPurchase && !isWhitelisted && (
-          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-800">You are not whitelisted. Please apply for the whitelist before purchasing.</p>
-          </div>
-        )}
+        <div className="mb-4" style={{ minHeight: 56 }}>
+          {canPurchase && !isWhitelisted ? (
+            <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-center justify-center transition-all duration-300">
+              <span className="text-red-800 font-medium flex items-center">
+                <svg className="w-5 h-5 mr-2 text-red-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M21 12A9 9 0 1 1 3 12a9 9 0 0 1 18 0z" />
+                </svg>
+                You are not whitelisted. Please apply for the whitelist before purchasing.
+              </span>
+            </div>
+          ) : (
+            <div style={{ height: 24 }}></div>
+          )}
+        </div>
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">

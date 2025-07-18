@@ -125,8 +125,8 @@ export default function CountdownTimer({ presaleInfo }) {
       </div>
 
       <div className="mt-4 text-center text-sm text-gray-600">
-        <p>開始時間: {new Date(presaleInfo.presaleStart * 1000).toLocaleString()}</p>
-        <p>結束時間: {new Date(presaleInfo.presaleEnd * 1000).toLocaleString()}</p>
+        <p>Start Time: {new Date(presaleInfo.presaleStart * 1000).toLocaleString('en-US')}</p>
+        <p>End Time: {new Date(presaleInfo.presaleEnd * 1000).toLocaleString('en-US')}</p>
       </div>
     </div>
   );
