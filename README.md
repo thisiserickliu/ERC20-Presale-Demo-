@@ -20,17 +20,17 @@ npm install
 ### Local Development
 
 1. Start Hardhat node:
-   ```bash
-   npx hardhat node
+```bash
+npx hardhat node
    ```
 2. Deploy contracts:
    ```bash
    npx hardhat run scripts/deploy.js --network localhost
-   ```
+```
 3. Start frontend:
-   ```bash
-   npm start
-   ```
+```bash
+npm start
+```
 
 ### Environment Variables
 

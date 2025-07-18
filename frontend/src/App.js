@@ -241,13 +241,12 @@ function App() {
   return (
     <Router>
       <div
-        className="min-h-screen flex flex-col"
         style={{
           backgroundImage: `url(${bgHome})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundAttachment: 'fixed',
+          minHeight: '100vh',
+          width: '100vw',
         }}
       >
         <Header account={account} onConnect={connectWallet} />
@@ -424,8 +423,8 @@ function App() {
                     </div>
                   </div>
                 </div>
-              )}
-            />
+              )
+            } />
             <Route path="/roadmap" element={<Roadmap />} />
           </Routes>
         </main>
