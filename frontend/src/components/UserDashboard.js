@@ -70,6 +70,8 @@ export default function UserDashboard({ account, provider, presaleAddress = PRES
     try {
       const signer = provider.getSigner();
       const presale = new ethers.Contract(presaleAddress, presaleABI, signer);
+      console.log('Presale ABI functions:', presale.interface.fragments.map(f => f.name));
+      console.log('Presale address:', presaleAddress);
       const tx = await presale.applyWhitelist();
       await tx.wait();
       alert('Successfully applied for whitelist! Please refresh status.');
