@@ -177,4 +177,10 @@ contract Presale is ReentrancyGuard, Ownable {
             whitelist[user]
         );
     }
+
+    function applyWhitelist() external {
+        require(!whitelist[msg.sender], "Already whitelisted");
+        whitelist[msg.sender] = true;
+        emit WhitelistUpdated(msg.sender, true);
+    }
 } 
