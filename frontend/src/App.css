@@ -1,10 +1,4 @@
-body, .min-h-screen {
-  background-image: url('/bg-home.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
+/* 移除背景圖設定，改由 App.js inline style 控制 */
 
 .App {
   min-height: 100vh;

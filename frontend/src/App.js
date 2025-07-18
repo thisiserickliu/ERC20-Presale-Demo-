@@ -12,6 +12,7 @@ import UserDashboard from './components/UserDashboard';
 import TransactionHistory from './components/TransactionHistory';
 import './App.css';
 import { PRESALE_ADDRESS, MYTOKEN_ADDRESS, USDT_ADDRESS, PRESALE_ABI } from './constants';
+import bgHome from './assets/bg-home.jpg';
 
 // Contract ABIs
 // USDT ABI (只需 approve 與 allowance)
@@ -239,7 +240,16 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364] flex flex-col">
+      <div
+        className="min-h-screen flex flex-col"
+        style={{
+          backgroundImage: `url(${bgHome})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed',
+        }}
+      >
         <Header account={account} onConnect={connectWallet} />
         <main className="flex-1 flex flex-col items-center justify-center px-4 py-8">
           <Routes>
