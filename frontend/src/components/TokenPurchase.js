@@ -165,7 +165,7 @@ const TokenPurchase = ({
         {/* 新增：未在白名單時顯示提示 */}
         {canPurchase && !isWhitelisted && (
           <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-800">您尚未在白名單，請先申請加入白名單才能購買。</p>
+            <p className="text-red-800">You are not whitelisted. Please apply for the whitelist before purchasing.</p>
           </div>
         )}
         <div className="space-y-4">

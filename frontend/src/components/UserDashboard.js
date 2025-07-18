@@ -72,10 +72,10 @@ export default function UserDashboard({ account, provider, presaleAddress = PRES
       const presale = new ethers.Contract(presaleAddress, presaleABI, signer);
       const tx = await presale.applyWhitelist();
       await tx.wait();
-      alert('申請成功，請稍後刷新狀態！');
+      alert('Successfully applied for whitelist! Please refresh status.');
       loadUserInfo();
     } catch (err) {
-      alert('申請失敗：' + (err.reason || err.message));
+      alert('Application failed: ' + (err.reason || err.message));
     }
     setApplying(false);
   };
@@ -175,7 +175,7 @@ export default function UserDashboard({ account, provider, presaleAddress = PRES
                 onClick={handleApplyWhitelist}
                 disabled={applying}
               >
-                {applying ? '申請中...' : '申請加入白名單'}
+                {applying ? 'Applying...' : 'Apply for Whitelist'}
               </button>
             )}
           </div>
