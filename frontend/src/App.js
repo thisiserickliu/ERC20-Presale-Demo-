@@ -11,82 +11,9 @@ import CountdownTimer from './components/CountdownTimer';
 import UserDashboard from './components/UserDashboard';
 import TransactionHistory from './components/TransactionHistory';
 import './App.css';
-import { PRESALE_ADDRESS, MYTOKEN_ADDRESS, USDT_ADDRESS } from './constants';
+import { PRESALE_ADDRESS, MYTOKEN_ADDRESS, USDT_ADDRESS, PRESALE_ABI } from './constants';
 
 // Contract ABIs
-const PRESALE_ABI = [
-  {
-    inputs: [],
-    name: "getPresaleInfo",
-    outputs: [
-      { name: "_tokenPrice", type: "uint256" },
-      { name: "_minPurchase", type: "uint256" },
-      { name: "_maxPurchase", type: "uint256" },
-      { name: "_totalTokensForSale", type: "uint256" },
-      { name: "_tokensSold", type: "uint256" },
-      { name: "_totalRaised", type: "uint256" },
-      { name: "_presaleStart", type: "uint256" },
-      { name: "_presaleEnd", type: "uint256" },
-      { name: "_presaleFinalized", type: "bool" },
-      { name: "_whitelistEnabled", type: "bool" }
-    ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [{ name: "user", type: "address" }],
-    name: "getUserInfo",
-    outputs: [
-      { name: "_purchased", type: "uint256" },
-      { name: "_whitelisted", type: "bool" }
-    ],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [{ name: "amount", type: "uint256" }],
-    name: "buyTokens",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    inputs: [{ name: "users", type: "address[]" }, { name: "statuses", type: "bool[]" }],
-    name: "setWhitelist",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    inputs: [{ name: "enabled", type: "bool" }],
-    name: "setWhitelistEnabled",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "whitelistEnabled",
-    outputs: [{ name: "", type: "bool" }],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [{ name: "", type: "address" }],
-    name: "whitelist",
-    outputs: [{ name: "", type: "bool" }],
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    inputs: [],
-    name: "owner",
-    outputs: [{ name: "", type: "address" }],
-    stateMutability: "view",
-    type: "function"
-  }
-];
-
 // USDT ABI (只需 approve 與 allowance)
 const USDT_ABI = [
   "function approve(address spender, uint256 amount) public returns (bool)",
