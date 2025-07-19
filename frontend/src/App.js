@@ -258,12 +258,185 @@ function App() {
                   <div className="flex flex-col items-center justify-center w-full h-full">
                     <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-8 drop-shadow-lg tracking-wide">MyToken</h1>
                     <div className="mb-10">
-                      <div className="w-40 h-40 rounded-full bg-gradient-to-tr from-cyan-400 via-blue-600 to-purple-600 flex items-center justify-center shadow-2xl animate-pulse">
-                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <circle cx="40" cy="40" r="36" stroke="#00fff7" strokeWidth="4" fill="none" />
-                          <rect x="28" y="28" width="24" height="24" rx="6" fill="#00fff7" fillOpacity="0.2" />
-                          <path d="M40 32L48 40L40 48L32 40L40 32Z" fill="#00fff7" />
+                      <div className="w-40 h-40 rounded-full bg-gradient-to-tr from-cyan-400 via-blue-600 to-purple-600 flex items-center justify-center shadow-2xl animate-pulse relative overflow-hidden">
+                        {/* 多層背景動畫 */}
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-300/40 via-blue-500/40 to-purple-500/40 animate-spin" style={{ animationDuration: '12s' }}></div>
+                        <div className="absolute inset-2 rounded-full bg-gradient-to-br from-purple-400/30 via-pink-500/30 to-cyan-400/30 animate-spin" style={{ animationDuration: '8s', animationDirection: 'reverse' }}></div>
+                        <div className="absolute inset-4 rounded-full bg-gradient-to-tl from-yellow-400/20 via-orange-500/20 to-red-500/20 animate-spin" style={{ animationDuration: '16s' }}></div>
+                        
+                        {/* 主要 SVG 圖示 - 虛擬貨幣風格 */}
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10">
+                          <defs>
+                            {/* 虛擬貨幣漸層 */}
+                            <linearGradient id="coinGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                              <stop offset="0%" stopColor="#ffd700" stopOpacity="1"/>
+                              <stop offset="25%" stopColor="#ffed4e" stopOpacity="0.9"/>
+                              <stop offset="50%" stopColor="#ffb347" stopOpacity="0.8"/>
+                              <stop offset="75%" stopColor="#ff8c42" stopOpacity="0.7"/>
+                              <stop offset="100%" stopColor="#ff6347" stopOpacity="0.6"/>
+                            </linearGradient>
+                            
+                            <linearGradient id="cryptoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                              <stop offset="0%" stopColor="#00fff7" stopOpacity="1"/>
+                              <stop offset="33%" stopColor="#0099ff" stopOpacity="0.9"/>
+                              <stop offset="66%" stopColor="#6600ff" stopOpacity="0.8"/>
+                              <stop offset="100%" stopColor="#ff0066" stopOpacity="0.7"/>
+                            </linearGradient>
+                            
+                            <radialGradient id="coinInner" cx="50%" cy="50%" r="50%">
+                              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9"/>
+                              <stop offset="50%" stopColor="#f0f0f0" stopOpacity="0.7"/>
+                              <stop offset="100%" stopColor="#e0e0e0" stopOpacity="0.5"/>
+                            </radialGradient>
+                            
+                            <linearGradient id="blockchainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                              <stop offset="0%" stopColor="#32cd32" stopOpacity="1"/>
+                              <stop offset="50%" stopColor="#228b22" stopOpacity="0.8"/>
+                              <stop offset="100%" stopColor="#006400" stopOpacity="0.6"/>
+                            </linearGradient>
+                            
+                            <linearGradient id="digitalGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                              <stop offset="0%" stopColor="#00ffff" stopOpacity="1"/>
+                              <stop offset="50%" stopColor="#0080ff" stopOpacity="0.8"/>
+                              <stop offset="100%" stopColor="#8000ff" stopOpacity="0.6"/>
+                            </linearGradient>
+                            
+                            {/* 濾鏡效果 */}
+                            <filter id="coinGlow">
+                              <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                              <feMerge> 
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                              </feMerge>
+                            </filter>
+                            
+                            <filter id="cryptoGlow">
+                              <feGaussianBlur stdDeviation="1.5" result="cryptoBlur"/>
+                              <feMerge> 
+                                <feMergeNode in="cryptoBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                              </feMerge>
+                            </filter>
+                            
+                            <filter id="digitalGlow">
+                              <feGaussianBlur stdDeviation="1" result="digitalBlur"/>
+                              <feMerge> 
+                                <feMergeNode in="digitalBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                              </feMerge>
+                            </filter>
+                          </defs>
+                          
+                          {/* 硬幣外圈 - 虛擬貨幣邊緣 */}
+                          <circle cx="40" cy="40" r="38" stroke="url(#coinGradient)" strokeWidth="3" fill="none" filter="url(#coinGlow)"/>
+                          
+                          {/* 硬幣邊緣齒輪效果 */}
+                          <path d="M 40 2 L 42 2 L 42 4 L 40 4 Z" fill="url(#coinGradient)" opacity="0.8"/>
+                          <path d="M 40 76 L 42 76 L 42 78 L 40 78 Z" fill="url(#coinGradient)" opacity="0.8"/>
+                          <path d="M 2 40 L 4 40 L 4 42 L 2 42 Z" fill="url(#coinGradient)" opacity="0.8"/>
+                          <path d="M 76 40 L 78 40 L 78 42 L 76 42 Z" fill="url(#coinGradient)" opacity="0.8"/>
+                          
+                          {/* 對角線齒輪 */}
+                          <path d="M 15 15 L 17 15 L 17 17 L 15 17 Z" fill="url(#coinGradient)" opacity="0.6"/>
+                          <path d="M 65 65 L 67 65 L 67 67 L 65 67 Z" fill="url(#coinGradient)" opacity="0.6"/>
+                          <path d="M 15 65 L 17 65 L 17 67 L 15 67 Z" fill="url(#coinGradient)" opacity="0.6"/>
+                          <path d="M 65 15 L 67 15 L 67 17 L 65 17 Z" fill="url(#coinGradient)" opacity="0.6"/>
+                          
+                          {/* 硬幣主體 */}
+                          <circle cx="40" cy="40" r="35" fill="url(#coinInner)" stroke="url(#coinGradient)" strokeWidth="2"/>
+                          
+                          {/* 區塊鏈元素 - 連接節點 */}
+                          <circle cx="40" cy="15" r="2" fill="url(#blockchainGradient)" filter="url(#cryptoGlow)"/>
+                          <circle cx="40" cy="65" r="2" fill="url(#blockchainGradient)" filter="url(#cryptoGlow)"/>
+                          <circle cx="15" cy="40" r="2" fill="url(#blockchainGradient)" filter="url(#cryptoGlow)"/>
+                          <circle cx="65" cy="40" r="2" fill="url(#blockchainGradient)" filter="url(#cryptoGlow)"/>
+                          
+                          {/* 區塊鏈連接線 */}
+                          <line x1="40" y1="17" x2="40" y2="25" stroke="url(#blockchainGradient)" strokeWidth="1.5" opacity="0.8"/>
+                          <line x1="40" y1="55" x2="40" y2="63" stroke="url(#blockchainGradient)" strokeWidth="1.5" opacity="0.8"/>
+                          <line x1="17" y1="40" x2="25" y2="40" stroke="url(#blockchainGradient)" strokeWidth="1.5" opacity="0.8"/>
+                          <line x1="55" y1="40" x2="63" y2="40" stroke="url(#blockchainGradient)" strokeWidth="1.5" opacity="0.8"/>
+                          
+                          {/* 對角線區塊鏈連接 */}
+                          <line x1="25" y1="25" x2="30" y2="30" stroke="url(#blockchainGradient)" strokeWidth="1" opacity="0.6"/>
+                          <line x1="55" y1="55" x2="50" y2="50" stroke="url(#blockchainGradient)" strokeWidth="1" opacity="0.6"/>
+                          <line x1="25" y1="55" x2="30" y2="50" stroke="url(#blockchainGradient)" strokeWidth="1" opacity="0.6"/>
+                          <line x1="55" y1="25" x2="50" y2="30" stroke="url(#blockchainGradient)" strokeWidth="1" opacity="0.6"/>
+                          
+                          {/* 中央加密貨幣符號 */}
+                          <g transform="translate(40, 40)">
+                            {/* 比特幣風格符號 */}
+                            <path d="M-8 -8 L8 -8 L8 8 L-8 8 Z" fill="url(#cryptoGradient)" stroke="#ffffff" strokeWidth="0.5" filter="url(#cryptoGlow)"/>
+                            <path d="M-6 -6 L6 -6 L6 6 L-6 6 Z" fill="url(#cryptoGradient)" opacity="0.8"/>
+                            
+                            {/* 數字化紋理 */}
+                            <rect x="-4" y="-4" width="8" height="8" fill="none" stroke="url(#digitalGradient)" strokeWidth="0.3" opacity="0.7"/>
+                            <line x1="-4" y1="0" x2="4" y2="0" stroke="url(#digitalGradient)" strokeWidth="0.2" opacity="0.6"/>
+                            <line x1="0" y1="-4" x2="0" y2="4" stroke="url(#digitalGradient)" strokeWidth="0.2" opacity="0.6"/>
+                            
+                            {/* 加密符號 */}
+                            <text x="0" y="2" textAnchor="middle" fill="#ffffff" fontSize="6" fontWeight="bold" opacity="0.9">MTK</text>
+                          </g>
+                          
+                          {/* 數位化裝飾 - 二進位代碼效果 */}
+                          <text x="40" y="12" textAnchor="middle" fill="url(#digitalGradient)" fontSize="3" opacity="0.6">1010</text>
+                          <text x="40" y="68" textAnchor="middle" fill="url(#digitalGradient)" fontSize="3" opacity="0.6">1100</text>
+                          <text x="12" y="40" textAnchor="middle" fill="url(#digitalGradient)" fontSize="3" opacity="0.6" transform="rotate(-90 12 40)">1110</text>
+                          <text x="68" y="40" textAnchor="middle" fill="url(#digitalGradient)" fontSize="3" opacity="0.6" transform="rotate(90 68 40)">1001</text>
+                          
+                          {/* 虛擬貨幣標記 */}
+                          <circle cx="40" cy="28" r="1" fill="url(#cryptoGradient)" opacity="0.8">
+                            <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite"/>
+                          </circle>
+                          <circle cx="40" cy="52" r="1" fill="url(#cryptoGradient)" opacity="0.8">
+                            <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+                          </circle>
+                          <circle cx="28" cy="40" r="1" fill="url(#cryptoGradient)" opacity="0.8">
+                            <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite" begin="1s"/>
+                          </circle>
+                          <circle cx="52" cy="40" r="1" fill="url(#cryptoGradient)" opacity="0.8">
+                            <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite" begin="1.5s"/>
+                          </circle>
+                          
+                          {/* 區塊鏈節點動畫 */}
+                          <circle cx="40" cy="15" r="0.5" fill="#ffffff" opacity="0.9">
+                            <animate attributeName="r" values="0.5;1;0.5" dur="3s" repeatCount="indefinite"/>
+                          </circle>
+                          <circle cx="40" cy="65" r="0.5" fill="#ffffff" opacity="0.9">
+                            <animate attributeName="r" values="0.5;1;0.5" dur="3s" repeatCount="indefinite" begin="0.75s"/>
+                          </circle>
+                          <circle cx="15" cy="40" r="0.5" fill="#ffffff" opacity="0.9">
+                            <animate attributeName="r" values="0.5;1;0.5" dur="3s" repeatCount="indefinite" begin="1.5s"/>
+                          </circle>
+                          <circle cx="65" cy="40" r="0.5" fill="#ffffff" opacity="0.9">
+                            <animate attributeName="r" values="0.5;1;0.5" dur="3s" repeatCount="indefinite" begin="2.25s"/>
+                          </circle>
                         </svg>
+                        
+                        {/* 虛擬貨幣光點效果 */}
+                        <div className="absolute inset-0 rounded-full">
+                          {/* 主要加密光點 */}
+                          <div className="absolute top-2 left-1/2 w-1.5 h-1.5 bg-yellow-400 rounded-full animate-ping" style={{ animationDelay: '0s', animationDuration: '2s' }}></div>
+                          <div className="absolute bottom-2 left-1/2 w-1.5 h-1.5 bg-yellow-400 rounded-full animate-ping" style={{ animationDelay: '0.5s', animationDuration: '2s' }}></div>
+                          <div className="absolute left-1/2 top-1/2 w-1.5 h-1.5 bg-yellow-400 rounded-full animate-ping" style={{ animationDelay: '1s', animationDuration: '2s' }}></div>
+                          <div className="absolute right-1/2 top-1/2 w-1.5 h-1.5 bg-yellow-400 rounded-full animate-ping" style={{ animationDelay: '1.5s', animationDuration: '2s' }}></div>
+                          
+                          {/* 區塊鏈節點光點 */}
+                          <div className="absolute top-6 left-6 w-1 h-1 bg-green-400 rounded-full animate-ping" style={{ animationDelay: '0.3s', animationDuration: '1.5s' }}></div>
+                          <div className="absolute top-6 right-6 w-1 h-1 bg-green-400 rounded-full animate-ping" style={{ animationDelay: '0.8s', animationDuration: '1.5s' }}></div>
+                          <div className="absolute bottom-6 left-6 w-1 h-1 bg-green-400 rounded-full animate-ping" style={{ animationDelay: '1.2s', animationDuration: '1.5s' }}></div>
+                          <div className="absolute bottom-6 right-6 w-1 h-1 bg-green-400 rounded-full animate-ping" style={{ animationDelay: '1.7s', animationDuration: '1.5s' }}></div>
+                          
+                          {/* 數位化光點 */}
+                          <div className="absolute top-10 left-10 w-0.5 h-0.5 bg-cyan-400 rounded-full animate-ping" style={{ animationDelay: '0.1s', animationDuration: '1s' }}></div>
+                          <div className="absolute top-10 right-10 w-0.5 h-0.5 bg-cyan-400 rounded-full animate-ping" style={{ animationDelay: '0.6s', animationDuration: '1s' }}></div>
+                          <div className="absolute bottom-10 left-10 w-0.5 h-0.5 bg-cyan-400 rounded-full animate-ping" style={{ animationDelay: '1.1s', animationDuration: '1s' }}></div>
+                          <div className="absolute bottom-10 right-10 w-0.5 h-0.5 bg-cyan-400 rounded-full animate-ping" style={{ animationDelay: '1.6s', animationDuration: '1s' }}></div>
+                        </div>
+                        
+                        {/* 虛擬貨幣外圈光環 */}
+                        <div className="absolute -inset-2 rounded-full bg-gradient-to-tr from-yellow-400/20 via-orange-500/20 to-red-500/20 animate-pulse" style={{ animationDuration: '4s' }}></div>
+                        <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-green-400/10 via-blue-500/10 to-purple-500/10 animate-pulse" style={{ animationDuration: '6s', animationDelay: '1s' }}></div>
                       </div>
                     </div>
                     <button
