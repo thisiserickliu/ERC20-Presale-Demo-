@@ -17,6 +17,8 @@
     "ajv-keywords": "3.5.2",
     "date-fns": "^2.30.0",
     "ethers": "5.7.2",
+    "figma-api": "^2.0.2-beta",
+    "figma-developer-mcp": "^0.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",

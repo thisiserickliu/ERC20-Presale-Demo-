@@ -6,8 +6,6 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Presale is ReentrancyGuard, Ownable {
-    // using SafeMath for uint256; // 移除
-
     IERC20 public token;
     IERC20 public paymentToken; // USDT, USDC, etc.
     
@@ -23,12 +21,9 @@ contract Presale is ReentrancyGuard, Ownable {
     bool public presaleFinalized;
     
     mapping(address => uint256) public userPurchases;
-    mapping(address => bool) public whitelist;
-    bool public whitelistEnabled;
     
     event TokensPurchased(address indexed buyer, uint256 amount, uint256 cost);
     event PresaleFinalized(uint256 totalSold, uint256 totalRaised);
-    event WhitelistUpdated(address indexed user, bool status);
     
     constructor(
         address _token,
@@ -63,14 +58,7 @@ contract Presale is ReentrancyGuard, Ownable {
         _;
     }
     
-    modifier whitelistCheck() {
-        if (whitelistEnabled) {
-            require(whitelist[msg.sender], "Address not whitelisted");
-        }
-        _;
-    }
-    
-    function buyTokens(uint256 amount) external presaleActive whitelistCheck nonReentrant {
+    function buyTokens(uint256 amount) external presaleActive nonReentrant {
         require(amount >= minPurchase, "Amount below minimum purchase");
         require(amount <= maxPurchase, "Amount exceeds maximum purchase");
         require(userPurchases[msg.sender] + amount <= maxPurchase, "Exceeds personal maximum");
@@ -111,18 +99,6 @@ contract Presale is ReentrancyGuard, Ownable {
         require(paymentToken.transfer(owner(), balance), "Failed to transfer funds");
     }
     
-    function setWhitelist(address[] calldata users, bool[] calldata statuses) external onlyOwner {
-        require(users.length == statuses.length, "Arrays length mismatch");
-        for (uint256 i = 0; i < users.length; i++) {
-            whitelist[users[i]] = statuses[i];
-            emit WhitelistUpdated(users[i], statuses[i]);
-        }
-    }
-    
-    function setWhitelistEnabled(bool enabled) external onlyOwner {
-        whitelistEnabled = enabled;
-    }
-    
     function updatePresalePeriod(uint256 _start, uint256 _end) external onlyOwner {
         require(_end > _start, "Invalid presale period");
         presaleStart = _start;
@@ -151,8 +127,7 @@ contract Presale is ReentrancyGuard, Ownable {
         uint256 _totalRaised,
         uint256 _presaleStart,
         uint256 _presaleEnd,
-        bool _presaleFinalized,
-        bool _whitelistEnabled
+        bool _presaleFinalized
     ) {
         return (
             tokenPrice,
@@ -163,24 +138,15 @@ contract Presale is ReentrancyGuard, Ownable {
             totalRaised,
             presaleStart,
             presaleEnd,
-            presaleFinalized,
-            whitelistEnabled
+            presaleFinalized
         );
     }
     
     function getUserInfo(address user) external view returns (
-        uint256 _purchased,
-        bool _whitelisted
+        uint256 _purchased
     ) {
         return (
-            userPurchases[user],
-            whitelist[user]
+            userPurchases[user]
         );
-    }
-
-    function applyWhitelist() external {
-        require(!whitelist[msg.sender], "Already whitelisted");
-        whitelist[msg.sender] = true;
-        emit WhitelistUpdated(msg.sender, true);
     }
 } 
