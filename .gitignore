@@ -14,3 +14,6 @@ states/
 .env
 .env.local
 node_modules
+
+# Cursor IDE configuration (may contain sensitive data)
+.cursor/
